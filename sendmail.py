@@ -2,14 +2,17 @@
 # @Author: Baptiste
 # @Date:   2019-12-09 15:08:29
 # @Last Modified by:   Baptiste Bertrand-Rapello
-# @Last Modified time: 2019-12-09 15:53:51
+# @Last Modified time: 2019-12-09 15:58:39
 
 #!/usr/local/bin/python3
 
 import sys
 import smtplib
-
 from email.message import EmailMessage
+
+glb_subject = "a subject "
+glb_sender = "sender@email.com"
+glb_receiver = "receiver@email.com"
 
 def open_a_file_ronly(file_name):
 	try:
@@ -60,11 +63,21 @@ def getMailList(filename):
 	return lst_mail
 
 def getMailContentToSend(filename, emailListFileName):
+	email = EmailMessage()
+	#srv = smtplib.SMTP('localhost')
+
 	print("here i am going to open the file and read it ")
+	
 	fd = open_a_file_ronly(filename)
 	content = readContentToSend(fd)
 	listMail = getMailList(emailListFileName)
-	
+
+	email.set_content(content)
+	email['Subject'] = glb_subject
+	email['From'] = glb_sender
+	email['To'] = glb_receiver
+
+
 
 def main(av):
 	print("in the main function, all the magic will come")
