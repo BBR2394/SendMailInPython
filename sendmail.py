@@ -2,7 +2,7 @@
 # @Author: Baptiste
 # @Date:   2019-12-09 15:08:29
 # @Last Modified by:   Baptiste Bertrand-Rapello
-# @Last Modified time: 2019-12-09 15:36:05
+# @Last Modified time: 2019-12-09 15:53:51
 
 #!/usr/local/bin/python3
 
@@ -64,12 +64,13 @@ def getMailContentToSend(filename, emailListFileName):
 	fd = open_a_file_ronly(filename)
 	content = readContentToSend(fd)
 	listMail = getMailList(emailListFileName)
+	
 
-
-def main():
+def main(av):
 	print("in the main function, all the magic will come")
-	getMailContentToSend("mail_content.txt", "email_list.txt")
-
+	#getMailContentToSend("mail_content.txt", "email_list.txt")
+	getMailContentToSend(av[1], av[2])
 	return 0
 
-main()
+#print(sys.argv)
+main(sys.argv)
