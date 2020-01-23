@@ -1,0 +1,5 @@
+Good Morning
+
+This is just a test to test my python script to send mail.
+
+Best regards

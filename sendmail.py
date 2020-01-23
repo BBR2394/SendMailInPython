@@ -2,17 +2,18 @@
 # @Author: Baptiste
 # @Date:   2019-12-09 15:08:29
 # @Last Modified by:   Baptiste Bertrand-Rapello
-# @Last Modified time: 2020-01-23 15:45:24
+# @Last Modified time: 2020-01-23 15:52:53
 
 #!/usr/local/bin/python3
 
 import sys
+#import os
 import smtplib
 from email.message import EmailMessage
 import smtplib
 
 glb_subject = "a subject "
-glb_sender = "sender@email.com"
+glb_sender = "myemailaddr@email.com"
 glb_receiver = "receiver@email.com"
 
 def open_a_file_ronly(file_name):
@@ -63,6 +64,19 @@ def getMailList(filename):
 
 	return lst_mail
 
+def createMailList(content, lstAddr):
+	lstMail = []
+	for i in lstAddr:
+		mail = EmailMessage()
+		mail['Subject'] = glb_subject
+		mail['From'] = glb_sender
+		mail['To'] = i
+		mail.set_content(content)
+		lstMail.append(mail)
+	for i in lstMail:
+		print(i)
+
+
 def getMailContentToSend(filename, emailListFileName):
 	email = EmailMessage()
 	
@@ -79,7 +93,8 @@ def getMailContentToSend(filename, emailListFileName):
 	email['Subject'] = glb_subject
 	email['From'] = glb_sender
 	email['To'] = glb_receiver
-
+	print(email)
+	createMailList(content, listMail)
 	#server.send(email)
 	#server.quit()
 
