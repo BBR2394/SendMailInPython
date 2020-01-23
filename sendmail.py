@@ -2,13 +2,14 @@
 # @Author: Baptiste
 # @Date:   2019-12-09 15:08:29
 # @Last Modified by:   Baptiste Bertrand-Rapello
-# @Last Modified time: 2019-12-09 15:58:39
+# @Last Modified time: 2020-01-23 15:45:24
 
 #!/usr/local/bin/python3
 
 import sys
 import smtplib
 from email.message import EmailMessage
+import smtplib
 
 glb_subject = "a subject "
 glb_sender = "sender@email.com"
@@ -17,17 +18,17 @@ glb_receiver = "receiver@email.com"
 def open_a_file_ronly(file_name):
 	try:
 		fd = open(file_name, 'r')
-		print("-> The file is opened")
+		print("-> The file : " + file_name + " , is opened")
 		return fd
 	except  :
-		print("=> an error occured when opening the file")
+		print("=> an error occured when opening the file : " + file_name)
 		return -1
 
 def readContentToSend(fd):
 	txt = fd.read()
-	print("le text\n----------------------------------")
+	print("=>Text that is going to be send\n+----------------------------------+")
 	print(txt)
-	print("*-------------------------------*")
+	print("*----------------------------------*")
 	return txt
 
 def store_file_in_list(fd):
@@ -57,13 +58,15 @@ def getMailList(filename):
 	fd_list = open_a_file_ronly(filename)
 	lst_mail = mailListInList(fd_list)
 
-	for i in lst_mail:
-		print("mail : ", i)
+	for i in range (len(lst_mail)):
+		print("mail :", i,lst_mail[i])
 
 	return lst_mail
 
 def getMailContentToSend(filename, emailListFileName):
 	email = EmailMessage()
+	
+	#server = smtplib.SMTP()
 	#srv = smtplib.SMTP('localhost')
 
 	print("here i am going to open the file and read it ")
@@ -77,13 +80,20 @@ def getMailContentToSend(filename, emailListFileName):
 	email['From'] = glb_sender
 	email['To'] = glb_receiver
 
+	#server.send(email)
+	#server.quit()
 
 
 def main(av):
 	print("in the main function, all the magic will come")
-	#getMailContentToSend("mail_content.txt", "email_list.txt")
-	getMailContentToSend(av[1], av[2])
-	return 0
+	#print("av : ", av, len(av))
+	if len(av) < 3:
+		print("Usage :\n\t$>./sendmail.py file_contentOfTheMail.txt file_AdressMailList.txt")
+		return 1
+	else :
+		#getMailContentToSend("mail_content.txt", "email_list.txt")
+		getMailContentToSend(av[1], av[2])
+		return 0
 
 #print(sys.argv)
 main(sys.argv)
